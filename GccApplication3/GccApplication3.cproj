@@ -126,7 +126,13 @@
     <Compile Include="Include\Header\serialPort.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Include\Header\timer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Include\Src\serialPort.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Include\Src\timer.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
