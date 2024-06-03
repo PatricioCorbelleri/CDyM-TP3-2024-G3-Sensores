@@ -123,10 +123,22 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Include\Header\DHT11.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Include\Header\DS3231.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Include\Header\serialPort.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Include\Header\timer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Include\Src\DHT11.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Include\Src\DS3231.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Include\Src\serialPort.c">
