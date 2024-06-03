@@ -13,6 +13,28 @@ Discarded input sections
 
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .text          0x00000000        0x0 Include/Src/DHT11.o
+ .data          0x00000000        0x0 Include/Src/DHT11.o
+ .bss           0x00000000        0x0 Include/Src/DHT11.o
+ .text.DHT11_Read
+                0x00000000      0x104 Include/Src/DHT11.o
+ .text          0x00000000        0x0 Include/Src/DS3231.o
+ .data          0x00000000        0x0 Include/Src/DS3231.o
+ .bss           0x00000000        0x0 Include/Src/DS3231.o
+ .text.I2C_Start
+                0x00000000       0x10 Include/Src/DS3231.o
+ .text.I2C_Stop
+                0x00000000        0x8 Include/Src/DS3231.o
+ .text.I2C_Write
+                0x00000000       0x14 Include/Src/DS3231.o
+ .text.I2C_Read_Ack
+                0x00000000       0x14 Include/Src/DS3231.o
+ .text.I2C_Read_NAck
+                0x00000000       0x14 Include/Src/DS3231.o
+ .text.DS3231_GetTime
+                0x00000000       0x54 Include/Src/DS3231.o
+ .text.DS3231_GetDate
+                0x00000000       0x54 Include/Src/DS3231.o
  .text          0x00000000        0x0 Include/Src/serialPort.o
  .data          0x00000000        0x0 Include/Src/serialPort.o
  .bss           0x00000000        0x0 Include/Src/serialPort.o
@@ -121,6 +143,8 @@ Linker script and memory map
 
 Address of section .data set to 0x800100
 LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
+LOAD Include/Src/DHT11.o
+LOAD Include/Src/DS3231.o
 LOAD Include/Src/serialPort.o
 LOAD Include/Src/timer.o
 LOAD main.o
@@ -233,7 +257,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x136
+.text           0x00000000      0x160
  *(.vectors)
  .vectors       0x00000000       0x68 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x00000000                __vector_default
@@ -317,31 +341,37 @@ END GROUP
                 0x0000008c                __vector_20
                 0x00000090                . = ALIGN (0x2)
  *(.text.*)
+ .text.DHT11_Init
+                0x00000090        0xe Include/Src/DHT11.o
+                0x00000090                DHT11_Init
+ .text.I2C_Init
+                0x0000009e       0x12 Include/Src/DS3231.o
+                0x0000009e                I2C_Init
  .text.SerialPort_Init
-                0x00000090       0x14 Include/Src/serialPort.o
-                0x00000090                SerialPort_Init
+                0x000000b0       0x14 Include/Src/serialPort.o
+                0x000000b0                SerialPort_Init
  .text.SerialPort_TX_Enable
-                0x000000a4        0xc Include/Src/serialPort.o
-                0x000000a4                SerialPort_TX_Enable
+                0x000000c4        0xc Include/Src/serialPort.o
+                0x000000c4                SerialPort_TX_Enable
  .text.SerialPort_RX_Enable
-                0x000000b0        0xc Include/Src/serialPort.o
-                0x000000b0                SerialPort_RX_Enable
+                0x000000d0        0xc Include/Src/serialPort.o
+                0x000000d0                SerialPort_RX_Enable
  .text.SerialPort_RX_Interrupt_Enable
-                0x000000bc        0xc Include/Src/serialPort.o
-                0x000000bc                SerialPort_RX_Interrupt_Enable
+                0x000000dc        0xc Include/Src/serialPort.o
+                0x000000dc                SerialPort_RX_Interrupt_Enable
  .text.Timer1_Init
-                0x000000c8       0x28 Include/Src/timer.o
-                0x000000c8                Timer1_Init
+                0x000000e8       0x28 Include/Src/timer.o
+                0x000000e8                Timer1_Init
  .text.__vector_11
-                0x000000f0       0x1e Include/Src/timer.o
-                0x000000f0                __vector_11
- .text.main     0x0000010e       0x24 main.o
-                0x0000010e                main
-                0x00000132                . = ALIGN (0x2)
+                0x00000110       0x1e Include/Src/timer.o
+                0x00000110                __vector_11
+ .text.main     0x0000012e       0x2e main.o
+                0x0000012e                main
+                0x0000015c                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000132        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x00000132                _exit
-                0x00000132                exit
+ .fini9         0x0000015c        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x0000015c                _exit
+                0x0000015c                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -360,11 +390,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000132        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x0000015c        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000136                _etext = .
+                0x00000160                _etext = .
 
-.data           0x00800100        0x0 load address 0x00000136
+.data           0x00800100        0x0 load address 0x00000160
                 [!provide]                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -385,8 +415,8 @@ END GROUP
                 0x00800100                Flag_TemHum
  *(COMMON)
                 0x00800101                PROVIDE (__bss_end, .)
-                0x00000136                __data_load_start = LOADADDR (.data)
-                0x00000136                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000160                __data_load_start = LOADADDR (.data)
+                0x00000160                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800101        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -434,8 +464,10 @@ END GROUP
 
 .comment        0x00000000       0x30
  *(.comment)
- .comment       0x00000000       0x30 Include/Src/serialPort.o
+ .comment       0x00000000       0x30 Include/Src/DHT11.o
                                  0x31 (size before relaxing)
+ .comment       0x00000030       0x31 Include/Src/DS3231.o
+ .comment       0x00000030       0x31 Include/Src/serialPort.o
  .comment       0x00000030       0x31 Include/Src/timer.o
  .comment       0x00000030       0x31 main.o
 
@@ -459,59 +491,77 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000       0xc8
+.debug_aranges  0x00000000      0x148
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x80 Include/Src/serialPort.o
+                0x00000000       0x28 Include/Src/DHT11.o
  .debug_aranges
-                0x00000080       0x28 Include/Src/timer.o
+                0x00000028       0x58 Include/Src/DS3231.o
  .debug_aranges
-                0x000000a8       0x20 main.o
+                0x00000080       0x80 Include/Src/serialPort.o
+ .debug_aranges
+                0x00000100       0x28 Include/Src/timer.o
+ .debug_aranges
+                0x00000128       0x20 main.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xae5
+.debug_info     0x00000000     0x1085
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_info    0x000005f4      0x31e Include/Src/serialPort.o
- .debug_info    0x00000912       0xbb Include/Src/timer.o
- .debug_info    0x000009cd      0x118 main.o
+ .debug_info    0x000005f4      0x2f3 Include/Src/DHT11.o
+ .debug_info    0x000008e7      0x281 Include/Src/DS3231.o
+ .debug_info    0x00000b68      0x31e Include/Src/serialPort.o
+ .debug_info    0x00000e86       0xbb Include/Src/timer.o
+ .debug_info    0x00000f41      0x144 main.o
 
-.debug_abbrev   0x00000000      0x7fd
+.debug_abbrev   0x00000000      0xa5f
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_abbrev  0x000005a2      0x134 Include/Src/serialPort.o
- .debug_abbrev  0x000006d6       0x81 Include/Src/timer.o
- .debug_abbrev  0x00000757       0xa6 main.o
+ .debug_abbrev  0x000005a2      0x160 Include/Src/DHT11.o
+ .debug_abbrev  0x00000702      0x102 Include/Src/DS3231.o
+ .debug_abbrev  0x00000804      0x134 Include/Src/serialPort.o
+ .debug_abbrev  0x00000938       0x81 Include/Src/timer.o
+ .debug_abbrev  0x000009b9       0xa6 main.o
 
-.debug_line     0x00000000      0x5be
+.debug_line     0x00000000      0xa20
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x134 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_line    0x00000134      0x2c0 Include/Src/serialPort.o
- .debug_line    0x000003f4       0xd8 Include/Src/timer.o
- .debug_line    0x000004cc       0xf2 main.o
+ .debug_line    0x00000134      0x22a Include/Src/DHT11.o
+ .debug_line    0x0000035e      0x20f Include/Src/DS3231.o
+ .debug_line    0x0000056d      0x2c0 Include/Src/serialPort.o
+ .debug_line    0x0000082d       0xd8 Include/Src/timer.o
+ .debug_line    0x00000905      0x11b main.o
 
-.debug_frame    0x00000000      0x198
+.debug_frame    0x00000000      0x2bc
  *(.debug_frame)
- .debug_frame   0x00000000      0x130 Include/Src/serialPort.o
- .debug_frame   0x00000130       0x44 Include/Src/timer.o
- .debug_frame   0x00000174       0x24 main.o
+ .debug_frame   0x00000000       0x50 Include/Src/DHT11.o
+ .debug_frame   0x00000050       0xd4 Include/Src/DS3231.o
+ .debug_frame   0x00000124      0x130 Include/Src/serialPort.o
+ .debug_frame   0x00000254       0x44 Include/Src/timer.o
+ .debug_frame   0x00000298       0x24 main.o
 
-.debug_str      0x00000000      0x530
+.debug_str      0x00000000      0x65a
  *(.debug_str)
  .debug_str     0x00000000      0x208 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_str     0x00000208      0x2d3 Include/Src/serialPort.o
-                                0x314 (size before relaxing)
- .debug_str     0x000004db       0x44 Include/Src/timer.o
-                                0x1c8 (size before relaxing)
- .debug_str     0x0000051f       0x11 main.o
-                                0x206 (size before relaxing)
+ .debug_str     0x00000208      0x1e6 Include/Src/DHT11.o
+                                0x222 (size before relaxing)
+ .debug_str     0x000003ee       0x9a Include/Src/DS3231.o
+                                0x20b (size before relaxing)
+ .debug_str     0x00000488      0x17d Include/Src/serialPort.o
+                                0x301 (size before relaxing)
+ .debug_str     0x00000605       0x44 Include/Src/timer.o
+                                0x1b5 (size before relaxing)
+ .debug_str     0x00000649       0x11 main.o
+                                0x207 (size before relaxing)
 
-.debug_loc      0x00000000      0x2df
+.debug_loc      0x00000000      0x80e
  *(.debug_loc)
- .debug_loc     0x00000000      0x2a3 Include/Src/serialPort.o
- .debug_loc     0x000002a3       0x3c Include/Src/timer.o
+ .debug_loc     0x00000000      0x2f8 Include/Src/DHT11.o
+ .debug_loc     0x000002f8      0x237 Include/Src/DS3231.o
+ .debug_loc     0x0000052f      0x2a3 Include/Src/serialPort.o
+ .debug_loc     0x000007d2       0x3c Include/Src/timer.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -531,11 +581,13 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0x98
+.debug_ranges   0x00000000      0x110
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x70 Include/Src/serialPort.o
- .debug_ranges  0x00000070       0x18 Include/Src/timer.o
- .debug_ranges  0x00000088       0x10 main.o
+ .debug_ranges  0x00000000       0x30 Include/Src/DHT11.o
+ .debug_ranges  0x00000030       0x48 Include/Src/DS3231.o
+ .debug_ranges  0x00000078       0x70 Include/Src/serialPort.o
+ .debug_ranges  0x000000e8       0x18 Include/Src/timer.o
+ .debug_ranges  0x00000100       0x10 main.o
 
 .debug_macro
  *(.debug_macro)
