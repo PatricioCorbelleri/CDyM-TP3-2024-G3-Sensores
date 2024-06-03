@@ -8,6 +8,8 @@ Include\Src\DS3231.c
 
 Include\Src\serialPort.c
 
+Include\Src\tempHumReg.c
+
 Include\Src\timer.c
 
 main.c

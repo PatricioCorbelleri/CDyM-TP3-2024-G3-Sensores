@@ -1,6 +1,6 @@
 #include <avr/io.h>
 #include <util/twi.h>
-#include "DS3231.h"
+#include <DS3231.h>
 
 void I2C_Init(void) {
 	TWSR = 0x00;
