@@ -12,7 +12,7 @@ void DHT11_Init(void) {
 	DHT11_PORT |= (1 << DHT11_PIN); // Establece el pin en alto
 }
 
-uint8_t DHT11_Read(float *temperature, float *humidity) {
+uint8_t DHT11_Read(int *temperature_1, int *temperature_2, int *humidity_1, int *humidity_2) {
 	uint8_t bits[5] = {0}; // Asegurarse de inicializar los bits a 0
 	uint8_t i, j = 0;
 
@@ -74,10 +74,11 @@ uint8_t DHT11_Read(float *temperature, float *humidity) {
 	if ((uint8_t)(bits[0] + bits[1] + bits[2] + bits[3]) != bits[4]) {
 		return 1; // Error: la suma de comprobación no coincide
 	}
+	
+	*humidity_1 = bits[0];
+	*humidity_2 = bits[1];
+	*temperature_1 = bits[2];
+	*temperature_2 = bits[3];
 
-	// Conversión de los datos leídos
-	*humidity = bits[0];
-	*temperature = bits[2];
-
-	return 0; // Lectura exitosa
+	return 0; // Lectura exitosa uwu
 }
