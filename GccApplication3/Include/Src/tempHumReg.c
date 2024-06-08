@@ -4,22 +4,25 @@
 #include <SerialPort.h>
 #include <stdio.h>
 
-extern volatile uint8_t Flag_SendData;
+extern volatile uint8_t Flag_SendData = 0;
 extern char msg2[];
 
 void Task_TemHum(void) {
-	float temperature = 0;
-	float humidity = 0;
+	int temperature_1 = 0;
+	int temperature_2 = 0;
+	int humidity_1 = 0;
+	int humidity_2 = 0;
 
-	if (DHT11_Read(&temperature, &humidity) == 0) {
+	if (DHT11_Read(&temperature_1, &temperature_2, &humidity_1, &humidity_2) == 0) {
 		char buffer[100];
 		uint8_t hour, minute, second, day, month, year;
 		DS3231_GetTime(&hour, &minute, &second);
 		DS3231_GetDate(&day, &month, &year);
 
 		snprintf(buffer, sizeof(buffer),
-		"TEMP: %f°C HUM: %f%% FECHA: %02d/%02d/%02d HORA: %02d:%02d:%02d\r\n",
-		temperature, humidity, day, month, year, hour, minute, second);
+		"TEMP: %d.%d°C HUM: %d.%d%% FECHA: %02d/%02d/%02d HORA: %02d:%02d:%02d\r\n",
+		temperature_1, temperature_2, humidity_1, humidity_2,
+		day, month, year, hour, minute, second);
 
 		if (Flag_SendData) {
 			SerialPort_Send_String(buffer);
