@@ -16,4 +16,10 @@ uint8_t I2C_Read_NAck(void);
 void DS3231_GetTime(uint8_t *hour, uint8_t *minute, uint8_t *second);
 void DS3231_GetDate(uint8_t *day, uint8_t *month, uint8_t *year);
 
+void DS3231_SetTime(uint8_t hour, uint8_t minute, uint8_t second);
+void DS3231_SetDate(uint8_t day, uint8_t month, uint8_t year);
+
+uint8_t dec_to_bcd(uint8_t dec);
+uint8_t bcd_to_dec(uint8_t bcd);
+
 #endif /* DS3231_H_ */
