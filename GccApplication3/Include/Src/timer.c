@@ -24,14 +24,10 @@ void Timer1_Init(void) {
 	TCCR1B |= (1 << WGM12); // Modo CTC
 	
 	// Establecer el valor de comparación para 2 segundos
-<<<<<<< HEAD
 	OCR1A = 62499; // 62499 cuentas para 2 segundos con prescaler 256 8 MHz
 	
 	//Ignorar
 	//OCR1A = 31249; // 31249 cuentas para 2 segundos con prescaler 256 16 MHz
-=======
-	OCR1A = 62499; // 62499 cuentas para 2 segundos con prescaler 256
->>>>>>> 84b9747c9fd520650ce82ea90db77b7c42fe6d22
 	
 	// Habilitar la interrupción por comparación de salida A
 	TIMSK1 |= (1 << OCIE1A);
