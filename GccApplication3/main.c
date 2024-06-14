@@ -22,6 +22,7 @@ int main(void)
 {
     // Inicializacion
 	
+<<<<<<< HEAD
 	//Para proteus
 	//Si pongo '0x51' no funciona en proteus xd, por eso pusimos solo '51'
 	SerialPort_Init(51); // 9600 bps con un reloj de 16MHz
@@ -31,6 +32,15 @@ int main(void)
 	SerialPort_TX_Enable();
 	SerialPort_RX_Enable();
 	SerialPort_RX_Interrupt_Enable();
+=======
+	// Inicialización de los módulos
+	//SerialPort_Init(103); // 9600 bps con un reloj de 16MHz
+	//SerialPort_Init(51); // 9600 bps con un reloj de 8MHz
+	SerialPort_Init(51); // Configurar UART a 9600bps, 8 bits de datos, 1 bit de parada @ F_CPU = 8MHz.
+	SerialPort_TX_Enable(); // Habilitar transmisor USART.
+	SerialPort_RX_Enable(); // Habilitar receptor USART.
+	SerialPort_RX_Interrupt_Enable(); // Habilitar interrupción de receptor USART.
+>>>>>>> 84b9747c9fd520650ce82ea90db77b7c42fe6d22
 	
 	// Inicialización del Timer1
 	Timer1_Init();
