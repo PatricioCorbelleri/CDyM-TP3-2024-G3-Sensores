@@ -3,10 +3,14 @@
 #include <DS3231.h>
 #include <SerialPort.h>
 #include <stdio.h>
+#include <string.h>
 
 extern volatile uint8_t Flag_SendData;
 extern char msg1[];
 extern char msg2[];
+volatile char buffer[100];
+volatile uint8_t i = 0;
+extern volatile uint8_t Flag_String;
 
 void Task_TemHum(void) {
 	uint8_t temperature_1 = 0;
@@ -16,7 +20,6 @@ void Task_TemHum(void) {
 
 	if (DHT11_Read(&temperature_1, &temperature_2, &humidity_1, &humidity_2) == 0) {
 		
-		char buffer[100];
 		uint8_t hour, minute, second, day, month, year;
 		DS3231_GetTime(&hour, &minute, &second);
 		DS3231_GetDate(&day, &month, &year);
@@ -26,16 +29,7 @@ void Task_TemHum(void) {
 		temperature_1, temperature_2, humidity_1, humidity_2,
 		day, month, year, hour, minute, second);
 
-// 		snprintf(buffer, sizeof(buffer),
-// 		"\r\ntemperatura_1: %d\r\ntemperatura_2: %d\r\nhumidity_1: %d\r\nhumidity_2: %d\r\n\r\n",
-// 		temperature_1, temperature_2, humidity_1, humidity_2);
-
-		if (Flag_SendData) {
-// 			SerialPort_Wait_For_TX_Buffer_Free(); //9600bps formato 8N1, 10bits, 10.Tbit=10/9600=1ms
-// 			SerialPort_Send_String("\r\nimpresion\r\n");
-			SerialPort_Wait_For_TX_Buffer_Free(); //9600bps formato 8N1, 10bits, 10.Tbit=10/9600=1ms
-			SerialPort_Send_String(buffer);
-		}
+		Flag_String = 1;
 	}
 }
 
@@ -53,18 +47,18 @@ ISR(USART_RX_vect) {
 			SerialPort_Send_String(msg2);
 		}
 	}
+}
+
+ISR(USART_UDRE_vect){
 	
-// 	if (RX_Buffer == 'a' || RX_Buffer == 'A') {
-// 		if (!Flag_SendData) {
-// 			SerialPort_Wait_For_TX_Buffer_Free(); //9600bps formato 8N1, 10bits, 10.Tbit=10/9600=1ms
-// 			SerialPort_Send_String("agus\r\n");
-// 		}
-// 	}
-// 	
-// 	if (RX_Buffer == 'p' || RX_Buffer == 'P') {
-// 		if (!Flag_SendData) {
-// 			SerialPort_Wait_For_TX_Buffer_Free(); //9600bps formato 8N1, 10bits, 10.Tbit=10/9600=1ms
-// 			SerialPort_Send_String("pato\r\n");
-// 		}
-// 	}
+	if (buffer[i]){ // Si sigue habiendo datos
+		SerialPort_Send_Data(buffer[i]); // Enviar dato
+		i++;
+	}
+	else {
+		Flag_String = 0; // Termino de transmitir
+		i = 0;
+		memset(buffer, '\0', sizeof(buffer));
+		SerialPort_TX_Interrupt_Disable(); // Deshabilitar interrupción de transmisión
+	}
 }

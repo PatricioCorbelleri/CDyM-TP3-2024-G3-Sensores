@@ -1,7 +1,7 @@
 // IRL
-//#define F_CPU 16000000UL
+#define F_CPU 16000000UL
 //proteus
-#define F_CPU 8000000UL
+//#define F_CPU 8000000UL
 
 #include <util/delay.h>
 #include <avr/io.h>
@@ -31,18 +31,6 @@ uint8_t DHT11_Read(uint8_t *temperature_1, uint8_t *temperature_2, uint8_t *humi
 	// Configura el pin como ENTRADA para LEER la respuesta del DHT11
 	DHT11_DDR &= ~(1 << DHT11_PIN);
 	
-	// 	_delay_us(20);
-	// 	//si alto
-	// 	if ((DHT11_PIN_INPUT & (1 << DHT11_PIN))) {
-	// 		_delay_us(21);
-	// 		//si alto
-	// 		if ((DHT11_PIN_INPUT & (1 << DHT11_PIN))) {
-	// 			SerialPort_Wait_For_TX_Buffer_Free(); //9600bps formato 8N1, 10bits, 10.Tbit=10/9600=1ms
-	// 			SerialPort_Send_String("\r\nERROR: DHT no respondio.\r\n");
-	// 			return 1;
-	// 		}
-	// 	}
-	
 	//Esperar q se ponga en bajo (80 us)
 	while ((DHT11_PIN_INPUT & (1 << DHT11_PIN)));
 	
@@ -54,10 +42,8 @@ uint8_t DHT11_Read(uint8_t *temperature_1, uint8_t *temperature_2, uint8_t *humi
 	
 	// Lee los datos del DHT11
 	for (j = 0; j < 5; j++) {
-		//SerialPort_Send_String("\r\n\r\nJ\r\n");
 		uint8_t result = 0;
 		for (i = 0; i < 8; i++) {
-			//SerialPort_Send_String("i ");
 			
 			//Esperar q se ponga en alto
 			while (!(DHT11_PIN_INPUT & (1 << DHT11_PIN)));
@@ -79,17 +65,11 @@ uint8_t DHT11_Read(uint8_t *temperature_1, uint8_t *temperature_2, uint8_t *humi
 		bits[j] = result;
 	}
 	
-	//_delay_us(50);
-	
 	// Espera a que el pin se ponga alto
 	while (!(DHT11_PIN_INPUT & (1 << DHT11_PIN)));
 
 	// Verificación de la suma de comprobación
 	if ((uint8_t)(bits[0] + bits[1] + bits[2] + bits[3]) != bits[4]) {
-		//SerialPort_Send_String("Suma incorrecta\r\n");
-		// Configura el pin como salida y lo establece en alto
-		//DHT11_DDR |= (1 << DHT11_PIN);
-		//DHT11_PORT |= (1 << DHT11_PIN);
 		return 1; // Error: la suma de comprobación no coincide
 	}
 	
@@ -97,7 +77,6 @@ uint8_t DHT11_Read(uint8_t *temperature_1, uint8_t *temperature_2, uint8_t *humi
 	*humidity_2 = bits[1];
 	*temperature_1 = bits[2];
 	*temperature_2 = bits[3];
-	
-	//SerialPort_Send_String("Suma correcta\r\n");
-	return 0; // Lectura exitosa uwu
+
+	return 0; // Lectura exitosa
 }
