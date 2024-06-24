@@ -4,20 +4,6 @@
 volatile uint8_t Flag_TemHum = 0;
 volatile uint8_t cont = 0;
 
-// void Timer1_Init(void) {
-// 	// Configurar Timer1 en modo CTC
-// 	TCCR1B |= (1 << WGM12); // Modo CTC
-// 	
-// 	// Establecer el valor de comparación para 2 segundos
-// 	OCR1A = 15625 - 1; // 15624 cuentas para 2 segundos con prescaler 1024 y 8 MHz
-// 	
-// 	// Habilitar la interrupción por comparación de salida A
-// 	TIMSK1 |= (1 << OCIE1A);
-// 	
-// 	// Configurar el prescaler a 1024 y arrancar el temporizador
-// 	TCCR1B |= (1 << CS12) | (1 << CS10);
-// }
-
 //Creo que tarda lo mismo usando 256 y 1024
 void Timer1_Init(void) {
 	// Configurar Timer1 en modo CTC
@@ -25,9 +11,6 @@ void Timer1_Init(void) {
 	
 	// Establecer el valor de comparación para 2 segundos
 	OCR1A = 62499; // 62499 cuentas para 2 segundos con prescaler 256 8 MHz
-	
-	//Ignorar
-	//OCR1A = 31249; // 31249 cuentas para 2 segundos con prescaler 256 16 MHz
 	
 	// Habilitar la interrupción por comparación de salida A
 	TIMSK1 |= (1 << OCIE1A);
@@ -39,7 +22,7 @@ void Timer1_Init(void) {
 ISR(TIMER1_COMPA_vect) {
 	// para proteus: 1
 	// para IRL: 2
-	if (++cont == /*2*/1) {
+	if (++cont == 2/*1*/) {
 		Flag_TemHum = 1;
 		cont = 0;
 	}
